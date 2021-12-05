@@ -1,9 +1,10 @@
 import axios from 'axios';
+
 import { setAlert } from './alert';
 
 import {
-	GET_PROFILE,
-	GET_PROFILES,
+	GET_ONE_PROFILE,
+	GET_ALL_PROFILES,
 	PROFILE_ERROR,
 	UPDATE_PROFILE,
 	CLEAR_PROFILE,
@@ -17,7 +18,7 @@ export const getCurrentProfile = () => async dispatch => {
 		const res = await axios.get('/api/profile/me');
 
 		dispatch({
-			type: GET_PROFILE,
+			type: GET_ONE_PROFILE,
 			payload: res.data,
 		});
 	} catch (err) {
@@ -39,7 +40,7 @@ export const getProfiles = () => async dispatch => {
 		const res = await axios.get('/api/profile');
 
 		dispatch({
-			type: GET_PROFILES,
+			type: GET_ALL_PROFILES,
 			payload: res.data,
 		});
 	} catch (err) {
@@ -56,23 +57,25 @@ export const getProfiles = () => async dispatch => {
 // Get profile by ID
 export const getProfileById = userId => async dispatch => {
 	try {
-		const res = await axios.get(`/api/profile/${userId}`);
-
-		dispatch({
-			type: GET_PROFILES,
-			payload: res.data,
-		});
+		const res = await axios.get(`/api/profile/user/${userId}`);
+		
+			dispatch(
+				{
+					type: GET_ONE_PROFILE,
+					payload: res.data,
+				},
+				console.log(JSON.stringify(res.data))
+			);
 	} catch (err) {
 		dispatch({
 			type: PROFILE_ERROR,
 			payload: {
-				msg: err.response.statusText,
-				status: err.response.status,
+				msg: 'err.response.statusText',
+				status: 8888888,
 			},
 		});
 	}
 };
-
 
 //Get Github repos
 export const getGithubRepos = username => async dispatch => {
@@ -108,7 +111,7 @@ export const createProfile =
 			const res = await axios.post('/api/profile', formData, config);
 
 			dispatch({
-				type: GET_PROFILE,
+				type: GET_ONE_PROFILE,
 				payload: res.data,
 			});
 
@@ -181,7 +184,6 @@ export const addExperience = (formData, history) => async dispatch => {
 	}
 };
 
-
 // Add education
 export const addEducation = (formData, history) => async dispatch => {
 	try {
@@ -191,11 +193,7 @@ export const addEducation = (formData, history) => async dispatch => {
 			},
 		};
 
-		const res = await axios.put(
-			'/api/profile/education',
-			formData,
-			config
-		);
+		const res = await axios.put('/api/profile/education', formData, config);
 
 		dispatch({
 			type: UPDATE_PROFILE,
@@ -220,8 +218,7 @@ export const addEducation = (formData, history) => async dispatch => {
 			},
 		});
 	}
-}
-
+};
 
 // Delete experience
 export const deleteExperience = id => async dispatch => {
@@ -243,8 +240,7 @@ export const deleteExperience = id => async dispatch => {
 			},
 		});
 	}
-}
-
+};
 
 // Delete education
 export const deleteEducation = id => async dispatch => {
@@ -266,8 +262,7 @@ export const deleteEducation = id => async dispatch => {
 			},
 		});
 	}
-}
-
+};
 
 // Delete account & profile
 export const deleteAccount = () => async dispatch => {
@@ -289,4 +284,4 @@ export const deleteAccount = () => async dispatch => {
 			});
 		}
 	}
-}
+};
