@@ -64,7 +64,7 @@ export const getProfileById = userId => async dispatch => {
 					type: GET_ONE_PROFILE,
 					payload: res.data,
 				},
-				console.log(JSON.stringify(res.data))
+				// console.log(JSON.stringify(res.data))
 			);
 	} catch (err) {
 		dispatch({

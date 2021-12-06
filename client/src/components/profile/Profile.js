@@ -15,10 +15,10 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
 		getProfileById(match.params.id);
 	}, [getProfileById, match.params.id]);
 
-	console.log('Profile: ' + profile);
-	console.log('match.params.id: ' + match.params.id);
-	console.log('Auth.user: ' + auth.user);
-	console.log('Match: ' + match);
+	// console.log('Profile: ' + profile);
+	// console.log('match.params.id: ' + match.params.id);
+	// console.log('Auth.user: ' + auth.user);
+	// console.log('Match: ' + match);
 	return (
 		<Fragment>
 			{profile === null ? (
