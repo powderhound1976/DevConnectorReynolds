@@ -8,16 +8,16 @@ import { getPinned, getPosts } from '../../actions/post';
 const Pinned = ({ auth, getPinned, getPosts, likes, post: { posts} }) => {
 	useEffect(() => {
 		getPinned();
-
-	}, [getPinned]);
+    getPosts();
+	}, [getPinned, getPosts]);
   console.log(likes);
 	return (
 		<Fragment>
-			<h1 className='large text-primary'>Posts</h1>
+			<h1 className='large text-primary'>Pinned Posts</h1>
 			<p className='lead'>
-				<i className='fas fa-user' /> Welcome to the community
+				<i className='fas fa-user' /> These are posts that you have pinned
 			</p>
-			<PostForm />
+			
 
 			<div className='posts'>
 				{posts.map((p,i) => (
