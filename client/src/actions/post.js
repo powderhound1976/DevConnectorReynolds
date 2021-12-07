@@ -32,6 +32,26 @@ export const getPosts = () => async dispatch => {
 	}
 };
 
+// Get posts
+export const getPinned = () => async dispatch => {
+	try {
+		const res = await axios.get('/api/posts/pinned');
+
+		dispatch({
+			type: GET_POSTS,
+			payload: {  likes: res.data },
+		});
+	} catch (err) {
+		dispatch({
+			type: POST_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
 // Add like
 export const addLike = id => async dispatch => {
   try {

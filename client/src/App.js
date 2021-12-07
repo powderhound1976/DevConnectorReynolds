@@ -16,6 +16,7 @@ import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import Pinned from './components/posts/PinnedPosts';
 
 
 // Redux
@@ -53,6 +54,7 @@ const App = () => {
 						<PrivateRoute exact path='/add-education' component={AddEducation} />
 						<PrivateRoute exact path='/posts' component={Posts} />
 						<PrivateRoute exact path='/posts/:id' component={Post} />
+						<PrivateRoute exact path='/pinned' component={Pinned} />
 					</Switch>
 				</section>
 			</Fragment>
