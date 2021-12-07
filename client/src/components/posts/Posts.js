@@ -5,24 +5,45 @@ import PostItem from './PostItem';
 import PostForm from './PostForm';
 import { getPosts } from '../../actions/post';
 
-const Posts = ({ getPosts, post: { posts } }) => {
+const Posts = ({ getPosts, post: { posts, date} }) => {
+  
   useEffect(() => {
-    getPosts();
+    getPosts('dec');
   }, [getPosts]);
 
+  // const dateSort = () => {
+  //   sortDirection = 'acc';
+  //   return sortDirection;
+  // };
+
+
   return (
-    <Fragment>
-      <h1 className="large text-primary">Posts</h1>
-      <p className="lead">
-        <i className="fas fa-user" /> Welcome to the community
-      </p>
-      <PostForm />
-      <div className="posts">
-        {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
-        ))}
-      </div>
-    </Fragment>
+		<Fragment>
+			<h1 className='large text-primary'>Posts</h1>
+			<p className='lead'>
+				<i className='fas fa-user' /> Welcome to the community
+			</p>
+			<button
+				className='primary'
+				onClick={() => {
+					getPosts('acc');
+				}}>
+				Sort Accending
+			</button>
+			<button
+				className='primary'
+				onClick={() => {
+					getPosts('dec');
+				}}>
+				Sort Decending
+			</button>
+			<PostForm />
+			<div className='posts'>
+				{posts.map(post => (
+					<PostItem key={post._id} post={post} />
+				))}
+			</div>
+		</Fragment>
   );
 };
 
