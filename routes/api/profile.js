@@ -131,8 +131,9 @@ router.get('/', async (req, res) => {
 // @route   GET api/profile/skills
 // @desc    Get all profiles with a skills
 // @access  Public
-router.get('/skill', async (req, res) => {
+router.get('/:skill', async (req, res) => {
 	try {
+		const skillFromUrl = req.params.skill;
 		const profile = await Profile.find().sort({ skills: 1 });
 		const getProfile = [];
 		if (!profile) {
@@ -157,7 +158,7 @@ router.get('/skill', async (req, res) => {
 
 		for (let i = 0; i < getProfile.length; i++) {
 			for (let j = 0; j < getProfile[i].skills.length; j++) {
-				if (getProfile[i].skills[j].toLowerCase() === 'css') {
+				if (getProfile[i].skills[j].toLowerCase() === skillFromUrl.toLowerCase()) {
 					skillArray.push(getProfile[i]);
 				}
 			}
