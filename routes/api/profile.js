@@ -128,7 +128,47 @@ router.get('/', async (req, res) => {
 	}
 });
 
+// @route   GET api/profile/skills
+// @desc    Get all profiles with a skills
+// @access  Public
+router.get('/skill', async (req, res) => {
+	try {
+		const profile = await Profile.find().sort({ skills: 1 });
+		const getProfile = [];
+		if (!profile) {
+			return res.status(400).json({ msg: 'There is no profile' });
+		}
+		for (let i = 0; i < profile.length; i++) {
+			profile[i].skills.map(
+				skill => console.log(skill),
+				getProfile.unshift(profile[i])
+			);
+			// for (let j = 0; j < profile[i].skills.length; j++) {
+			// 	if (profile[i].skills[j] === 'css') {
+			// 		getProfile.push(profile[i]);
+			// 	}
+			// }
+			// if (profile[i].skills) {
+			// 	getProfile.push(profile[i]);
+			// }
+		}
 
+		const skillArray = [];
+
+		for (let i = 0; i < getProfile.length; i++) {
+			for (let j = 0; j < getProfile[i].skills.length; j++) {
+				if (getProfile[i].skills[j].toLowerCase() === 'css') {
+					skillArray.push(getProfile[i]);
+				}
+			}
+		}
+		// console.log('skillArray: ', skillArray);
+		res.json(skillArray);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
+	}
+});
 
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID

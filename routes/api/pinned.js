@@ -20,11 +20,11 @@ router.get('/', auth, async (req, res) => {
 				(like, index) => 
 				pinnedPosts.unshift(pinned[i]), // !!WORKS!!
 			);
-			for (let j = 0; j < pinned[i].likes.length; j++) {
-				if (pinned[i].likes[j].user.toString() === req.user.id) {
-					pinned[i].post = true;
-				}
-			}
+			// for (let j = 0; j < pinned[i].likes.length; j++) {
+			// 	if (pinned[i].likes[j].user.toString() === req.user.id) {
+			// 		pinned[i].post = true;
+			// 	}
+			// }
 		}
 
 		const mine = [];
