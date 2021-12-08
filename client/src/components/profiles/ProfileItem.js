@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {getProfilesWithSkill} from '../../actions/profile';
 
 const ProfileItem = ({
 	profile: {
@@ -10,6 +12,7 @@ const ProfileItem = ({
 		location,
 		skills,
 	},
+	getProfilesWithSkill,
 }) => {
 	return (
 		<div>
@@ -30,7 +33,10 @@ const ProfileItem = ({
 
 				<ul>
 					{skills.slice(0, 4).map((skill, index) => (
-						<li key={index} className='text-primary'>
+						<li
+							key={index}
+							className='text-primary'
+							onClick={() => getProfilesWithSkill(skill)}>
 							<i className='fas fa-check'></i> {skill}
 						</li>
 					))}
@@ -42,6 +48,7 @@ const ProfileItem = ({
 
 ProfileItem.propTypes = {
 	profile: PropTypes.object.isRequired,
+	getProfilesWithSkill: PropTypes.func.isRequired,
 };
 
-export default ProfileItem;
+export default connect(null, { getProfilesWithSkill })(ProfileItem);

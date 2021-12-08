@@ -131,40 +131,88 @@ router.get('/', async (req, res) => {
 // @route   GET api/profile/skills
 // @desc    Get all profiles with a skills
 // @access  Public
-router.get('/:skill', async (req, res) => {
+router.get('/skills/:skill', async (req, res) => {
 	try {
 		const skillFromUrl = req.params.skill;
 		const profile = await Profile.find().sort({ skills: 1 });
 		const getProfile = [];
+		const skillList = [];
 		if (!profile) {
 			return res.status(400).json({ msg: 'There is no profile' });
 		}
 		for (let i = 0; i < profile.length; i++) {
 			profile[i].skills.map(
 				skill => console.log(skill),
-				getProfile.unshift(profile[i])
+				getProfile.unshift(profile[i]),
+				skillList.unshift(profile[i].skills)
 			);
-			// for (let j = 0; j < profile[i].skills.length; j++) {
-			// 	if (profile[i].skills[j] === 'css') {
-			// 		getProfile.push(profile[i]);
-			// 	}
-			// }
-			// if (profile[i].skills) {
-			// 	getProfile.push(profile[i]);
-			// }
+			for (let j = 0; j < profile[i].skills.length; j++) {
+				if (profile[i].skills[j] === skillFromUrl) {
+					skillList.push(profile[i]);
+				}
+			}
 		}
 
 		const skillArray = [];
 
 		for (let i = 0; i < getProfile.length; i++) {
 			for (let j = 0; j < getProfile[i].skills.length; j++) {
-				if (getProfile[i].skills[j].toLowerCase() === skillFromUrl.toLowerCase()) {
+				if (
+					getProfile[i].skills[j].toLowerCase() ===
+					skillFromUrl.toLowerCase()
+				) {
 					skillArray.push(getProfile[i]);
 				}
 			}
 		}
-		// console.log('skillArray: ', skillArray);
+
 		res.json(skillArray);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
+	}
+});
+
+// @route   GET api/profile/skills
+// @desc    Get array of all skills
+// @access  Public
+router.get('/skills', async (req, res) => {
+	try {
+		// const skillFromUrl = req.params.skill;
+		const profile = await Profile.find().sort({ skills: 1 });
+		const getProfile = [];
+		const skillList = [];
+		if (!profile) {
+			return res.status(400).json({ msg: 'There is no profile' });
+		}
+
+		function Unique(arr) {
+			var tmp = [];
+			var result = [];
+
+			if (arr !== undefined) {
+				for (var i = 0; i < arr.length; i++) {
+					var val = arr[i];
+
+					if (tmp[val] === undefined) {
+						tmp[val] = true;
+						result.push(val);
+					}
+				}
+			}
+			return result;
+		}
+
+		for (let i = 0; i < profile.length; i++) {
+			for (let j = 0; j < profile[i].skills.length; j++) {
+				getProfile.unshift(profile[i]);
+				skillList.unshift(profile[i].skills[j]);
+			}
+		}
+
+		var unique = Unique(skillList);
+
+		res.json(unique);
 	} catch (err) {
 		console.error(err.message);
 		res.status(500).send('Server Error');

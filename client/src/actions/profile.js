@@ -32,6 +32,46 @@ export const getCurrentProfile = () => async dispatch => {
 	}
 };
 
+// Get current users profiles
+export const getProfilesWithSkill = skill => async dispatch => {
+	try {
+		const res = await axios.get(`api/skills/${skill}`);
+
+		dispatch({
+			type: GET_ALL_PROFILES,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Get list of skills
+export const getListOfSkills = () => async dispatch => {
+	try {
+		const res = await axios.get(`api/profile/skills`);
+
+		dispatch({
+			type: GET_ALL_PROFILES,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
 // Get all profiles
 export const getProfiles = () => async dispatch => {
 	dispatch({ type: CLEAR_PROFILE });
