@@ -33,8 +33,8 @@ export const getPosts = accDec => async dispatch => {
 		dispatch({
 			type: POST_ERROR,
 			payload: {
-				msg: 'err.response.statusText',
-				status: 999,
+				msg: err.response.statusText,
+				status: err.response.status,
 			},
 		});
 	}
@@ -43,18 +43,18 @@ export const getPosts = accDec => async dispatch => {
 // Get posts
 export const getPinned = () => async dispatch => {
 	try {
-		const res = await axios.get('/api/posts/pinned');
+		const res = await axios.get('/api/pinned');
 
 		dispatch({
 			type: GET_POSTS,
-			payload: {  likes: res.data },
+			payload: res.data,
 		});
 	} catch (err) {
 		dispatch({
 			type: POST_ERROR,
 			payload: {
-				msg: err.response.statusText,
-				status: err.response.status,
+				msg: 'this error',
+				status: 44444,
 			},
 		});
 	}
@@ -75,6 +75,7 @@ export const addLike = id => async dispatch => {
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
+  
 };
 
 // Remove like

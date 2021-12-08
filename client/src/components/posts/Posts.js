@@ -11,12 +11,6 @@ const Posts = ({ getPosts, post: { posts, date} }) => {
     getPosts('dec');
   }, [getPosts]);
 
-  // const dateSort = () => {
-  //   sortDirection = 'acc';
-  //   return sortDirection;
-  // };
-
-
   return (
 		<Fragment>
 			<h1 className='large text-primary'>Posts</h1>
@@ -24,18 +18,18 @@ const Posts = ({ getPosts, post: { posts, date} }) => {
 				<i className='fas fa-user' /> Welcome to the community
 			</p>
 			<button
-				className='primary'
+				className='btn btn-primary'
 				onClick={() => {
 					getPosts('acc');
 				}}>
-				Sort Accending
+				Newest to Oldest
 			</button>
 			<button
-				className='primary'
+				className='my-1 btn btn-primary'
 				onClick={() => {
 					getPosts('dec');
 				}}>
-				Sort Decending
+				Oldest to Newest
 			</button>
 			<PostForm />
 			<div className='posts'>
